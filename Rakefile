@@ -8,7 +8,7 @@ begin
     gemspec.homepage = "http://github.com/Peeja/multi_progress_bar/tree/master/"
     gemspec.authors = ["Peter Jaros"]
 
-    gemspec.add_dependency "ncurses"
+    gemspec.add_dependency "ffi-ncurses"
     gemspec.add_dependency "ruby-progressbar"
   end
   Jeweler::GemcutterTasks.new

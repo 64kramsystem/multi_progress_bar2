@@ -1,4 +1,4 @@
-require 'ncurses'
+require 'ffi-ncurses/ncurses'
 require 'progressbar'
 require 'delegate'
 
