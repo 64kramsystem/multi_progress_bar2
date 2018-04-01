@@ -1,5 +1,7 @@
 == MultiProgressBar
 
++NOTE+: the original project ("multi_progress_bar"), which doesn't work, is abandoned; this project ("multi_progress_bar2") uses a fixed version of the ncurses dependency ("ffi-ncurses2" in place of "ncurses"), allowing it to run as intended.
+
 Displays multiple progress bars using Ncurses.  Useful for displaying the status of multiple test runs, say, distributed across different machines.  Which is exactly why I wrote it.
 
 Uses +ruby-progressbar+ to render the bars.

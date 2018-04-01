@@ -2,6 +2,8 @@ require 'ffi-ncurses/ncurses'
 require 'progressbar'
 require 'delegate'
 
+require 'multi_progress_bar/version'
+
 module MultiProgressBar
   class << self
     attr_reader :bars
