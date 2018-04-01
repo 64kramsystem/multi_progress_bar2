@@ -1,6 +1,10 @@
+$LOAD_PATH << File.expand_path('lib', __dir__)
+
+require 'multi_progress_bar/version'
+
 Gem::Specification.new do |s|
   s.name = "multi_progress_bar2"
-  s.version = '0.3.1'
+  s.version = MultiProgressBar::VERSION
   s.summary = "Displays multiple progress bars using Ncurses."
   s.description  = "Fork of multi_progress_bar, using the (fixed) `ffi-ncurses2` instead of the defunct `ncurses`"
   s.email = "peter.a.jaros@gmail.com"
