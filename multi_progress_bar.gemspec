@@ -8,5 +8,5 @@ Gem::Specification.new do |s|
   s.authors = ["Peter Jaros"]
 
   s.add_dependency "ffi-ncurses"
-  s.add_dependency "ruby-progressbar"
+  s.add_dependency "ruby-progressbar", "0.0.9"
 end
