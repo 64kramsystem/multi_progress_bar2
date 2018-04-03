@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary = "Displays multiple progress bars using Ncurses."
   s.description  = "Fork of multi_progress_bar, using `curses` instead of the defunct `ncurses`"
   s.email = "peter.a.jaros@gmail.com"
-  s.homepage = "http://github.com/Peeja/multi_progress_bar/tree/master/"
+  s.homepage = "https://github.com/saveriomiroddi/multi_progress_bar2"
   s.authors = ["Peter Jaros"]
 
   s.add_dependency "curses", "~> 1.2.4"
