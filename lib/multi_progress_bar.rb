@@ -1,4 +1,4 @@
-require 'ffi-ncurses/ncurses'
+require 'curses'
 require 'progressbar'
 require 'delegate'
 
@@ -12,24 +12,24 @@ module MultiProgressBar
     def start
       @bars = [].freeze
 
-      Ncurses.initscr
-      Ncurses.curs_set(0)
-      Ncurses.start_color
+      Curses.init_screen
+      Curses.curs_set(0)
+      Curses.start_color
 
-      (0..7).each { |color_number| Ncurses.init_pair(color_number, color_number, Ncurses::COLOR_BLACK); }
+      (0..7).each { |color_number| Curses.init_pair(color_number, color_number, Curses::COLOR_BLACK); }
 
-      @bars_window = Ncurses::WINDOW.new(1, 0, Ncurses.LINES-1, 0)
-      @log_window  = Ncurses::WINDOW.new(Ncurses.LINES-1, 0, 0, 0)
+      @bars_window = Curses::Window.new(1, 0, Curses.lines-1, 0)
+      @log_window  = Curses::Window.new(Curses.lines-1, 0, 0, 0)
       @log_window.scrollok(true)
 
       trap("SIGWINCH") do
-        Ncurses.endwin
-        Ncurses.refresh
+        Curses.close_screen
+        Curses.refresh
 
         refresh_window_positions
 
         @bars.each do |bar|
-          bar.width = @bars_window.getmaxx
+          bar.width = @bars_window.maxx
           bar.show
         end
       end
@@ -40,7 +40,7 @@ module MultiProgressBar
       # Give an extra line below the output for the shell to prompt on.
       add_bar(nil)
 
-      Ncurses.endwin
+      Curses.close_screen
     end
 
     # Write +text+ to the space above the progress bars.
@@ -52,9 +52,9 @@ module MultiProgressBar
         @log_window.addstr(normal_text)
         case code
           when /3(\d)m/
-            @log_window.attron(Ncurses.COLOR_PAIR($1.to_i))
+            @log_window.attron(Curses.color_pair($1.to_i))
           when /0m/
-            @log_window.attron(Ncurses.COLOR_PAIR(7))
+            @log_window.attron(Curses.color_pair(7))
         end
       end
       @log_window.addstr("\n")
@@ -62,15 +62,15 @@ module MultiProgressBar
     end
 
     def width  #:nodoc:
-      @bars_window.getmaxx
+      @bars_window.maxx
     end
 
     def refresh_window_positions
-      @bars_window.mvwin(Ncurses.LINES-bars.size, @bars_window.getbegx)
-      @bars_window.resize(bars.size, @bars_window.getmaxx)
+      @bars_window.move(Curses.lines-bars.size, @bars_window.begx)
+      @bars_window.resize(bars.size, @bars_window.maxx)
       @bars_window.refresh
 
-      @log_window.resize(Ncurses.LINES-bars.size, @log_window.getmaxx)
+      @log_window.resize(Curses.lines-bars.size, @log_window.maxx)
       @log_window.refresh
     end
 
@@ -80,10 +80,10 @@ module MultiProgressBar
     end
 
     def update_bar(bar, rendered_bar)  #:nodoc:
-      @bars_window.move(bars.index(bar), 0)
-      @bars_window.attron(Ncurses.COLOR_PAIR(bar.color)) if bar.color
+      @bars_window.setpos(bars.index(bar), 0)
+      @bars_window.attron(Curses.color_pair(bar.color)) if bar.color
       @bars_window.addstr(rendered_bar)
-      @bars_window.attroff(Ncurses.COLOR_PAIR(bar.color)) if bar.color
+      @bars_window.attroff(Curses.color_pair(bar.color)) if bar.color
       @bars_window.refresh
     end
   end
